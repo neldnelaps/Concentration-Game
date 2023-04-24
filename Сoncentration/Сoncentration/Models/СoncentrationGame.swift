@@ -35,6 +35,6 @@ class СoncentrationGame {
             let card = Card()
             cards += [card, card]
         }
-//TODO: перетасовать карты
+        cards.shuffle()
     }
 }
