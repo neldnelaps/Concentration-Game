@@ -12,9 +12,9 @@ struct Card {
     var isMatched = false // карточка является совпавшей
     var identifire : Int
     
-    static var identifireNumber = 0
+    private static var identifireNumber = 0
     
-    static func identifireGenerator() -> Int {
+    private static func identifireGenerator() -> Int {
         identifireNumber += 1
         return identifireNumber
     }
