@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Card {
+struct Card : Hashable {
     var isFaceUp = false // карточка лицом вверх
     var isMatched = false // карточка является совпавшей
-    var identifire : Int
+    private var identifire : Int
     
     private static var identifireNumber = 0
     
@@ -21,5 +21,13 @@ struct Card {
     
     init() {
         self.identifire = Card.identifireGenerator()
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifire)
+    }
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+        return lhs.identifire == rhs.identifire
     }
 }
