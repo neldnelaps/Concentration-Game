@@ -13,17 +13,7 @@ class СoncentrationGame {
     
     private var indexOfOneAndOnlyUoFaceCard : Int? {// одна единственная перевернутая вверх карточка
         get {
-            var foundIndex : Int?
-            for index in cards.indices {
-                if cards[index].isFaceUp {
-                    if foundIndex == nil {
-                        foundIndex = index
-                    } else {
-                        foundIndex = nil
-                    }
-                }
-            }
-            return foundIndex
+            return cards.indices.filter{ cards[$0].isFaceUp }.oneAndOnly // проходим по всем индексам и фильтруем все перевернутые вверх карточки. Если там одна перевернутая карточка, то возвращаем ее индекс иначе nil
         }
         set {
             for index in cards.indices {
@@ -53,5 +43,11 @@ class СoncentrationGame {
             cards += [card, card]
         }
         cards.shuffle()
+    }
+}
+
+extension Collection {
+    var oneAndOnly : Element? {
+        return count == 1 ? first : nil
     }
 }
