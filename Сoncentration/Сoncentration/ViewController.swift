@@ -15,18 +15,31 @@ class ViewController: UIViewController {
         return  (buttonCollection.count + 1) / 2
     }
     
-    private var emojiCollection = ["🦊","🐰","🐶","🐼","🦆","🐸","🦋","🐙","🐳","🦩","🦀","🐌","🐢","🦓","🦭","🦔","🐘","🐫","🦜", "🦚","🐿️"]
+    private var emojiCollection = "🦊🐰🐶🐼🦆🐸🦋🐙🐳🦩🦀🐌🐢🦓🦭🦔🐘🐫🦜🦚🐿️"
     private var emojiDictionary = [Card:String]()
     
     private(set) var touches = 0 {
         didSet {
-            touchLabel.text = "Touches: \(touches)"
+            updateTouches()
         }
+    }
+    
+    private func updateTouches() {
+        let attributes : [NSAttributedString.Key : Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: UIColor.systemYellow
+        ]
+        let attributedText = NSAttributedString(string: "Touches: \(touches)", attributes: attributes)
+        touchLabel.attributedText = attributedText
     }
     
     @IBOutlet private var buttonCollection: [UIButton]!
     
-    @IBOutlet private weak var touchLabel: UILabel!
+    @IBOutlet private weak var touchLabel: UILabel! {
+        didSet{
+            updateTouches()
+        }
+    }
     
     @IBAction private func buttonAction(_ sender: UIButton) {
         touches += 1
@@ -52,7 +65,8 @@ class ViewController: UIViewController {
     
     private func emojiIdentifire(for card: Card) -> String {
         if emojiDictionary[card] == nil {
-            emojiDictionary[card] = emojiCollection.remove(at: emojiCollection.count.arc4randomExtension)
+            let randomStringIndex = emojiCollection.index(emojiCollection.startIndex, offsetBy: emojiCollection.count.arc4randomExtension)
+            emojiDictionary[card] = String(emojiCollection.remove(at: randomStringIndex))
         }
         return emojiDictionary[card] ?? ""
     }
